@@ -15,19 +15,23 @@ CX = os.environ.get("GCS_CX")
 # gis = GoogleImagesSearch(DEVELOPER_KEY, CX)
 
 
-def fetch_images(searchfor):
+def fetch_images(searchfor, dominantColor):
   with GoogleImagesSearch(DEVELOPER_KEY, CX) as gis:
-    _search_params = {"q": searchfor, 
-        "num": 15, 
-        "safe": "high", 
-        "fileType": "jpg",
-        "imgType": "photo",
-        "rights": "cc_publicdomain" 
-        }
+    _search_params = {
+      "q": searchfor, 
+      "num": 5, 
+      "safe": "high", 
+      "fileType": "jpg|png",
+      "imgType": "photo",
+      "rights": "cc_publicdomain",
+      "imgDominantColor": dominantColor 
+      }
     gis.search(search_params=_search_params)
     return gis.results()
 
 
-image0 = fetch_images("monkey")[0]
-print(image0.url)
+print([image.url for image in fetch_images('urban houes', 'white')])
+
+# image0 = fetch_images("monkey")[0]
+# print(image0.url)
 # print(image0.referrer_url)
