@@ -2,3 +2,4 @@ Google-Images-Search
 virtualenv
 python-dotenv
 windows-curses
+os
