@@ -4,3 +4,4 @@ python-dotenv
 windows-curses
 os
 Pillow
+io
