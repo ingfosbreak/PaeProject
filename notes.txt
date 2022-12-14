@@ -1,0 +1,14 @@
+// Client ID
+1025093809620-bo4u3gaoqd9fg8lvn3ddhd0kj6sd62ei.apps.googleusercontent.com
+
+
+// Client Secret
+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
+
+// My Client ID
+1025093809620-rugmdi5qmf987f4vjp14vruhng5oocsg.apps.googleusercontent.com
+
+
+// Cliant Secret
+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
+
