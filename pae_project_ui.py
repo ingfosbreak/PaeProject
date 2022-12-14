@@ -7,7 +7,10 @@ class PaeProject(tk.Tk):
         super().__init__()
         self.title("PaeProject")
 
-        # variable
+        # variables
+        self.search_keyword = tk.StringVar()
+        self.selected_type = tk.StringVar()
+        self.selected_dominant_color = tk.StringVar()
 
         self.init_components()
 
