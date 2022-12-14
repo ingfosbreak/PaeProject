@@ -42,6 +42,10 @@ class PaeProject(tk.Tk):
                                       command=lambda x=None: self.submit_handler())
         self.submit_button.grid(row=4, column=0, padx=5, pady=5, columnspan=2)
 
+        # Frame
+        bottomframe = tk.Frame(self, bg="black", width=1000, height=500)
+        bottomframe.grid(row=1, column=2, padx=5, pady=5, columnspan=100, rowspan=100)
+
     def submit_handler(self):
         current_search_keyword = self.search_keyword.get()
         current_selected_type = self.selected_type.get()
