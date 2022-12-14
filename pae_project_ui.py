@@ -12,10 +12,32 @@ class PaeProject(tk.Tk):
         self.selected_type = tk.StringVar()
         self.selected_dominant_color = tk.StringVar()
 
+        self.selected_type_choices = ["None", "room", "building"]
+        self.selected_dominant_color_choices = ["None", "black","blue", "brown", "gray", "green", "orange", "pink", "purple", "red", "teal", "white", "yellow"]
+        # Notes: type None = "", dominant None = "imgDominantColorUndefined"
+
         self.init_components()
 
     def init_components(self):
-        pass
+        self.search_keyword_field = tk.Entry(self, width=20, textvariable=self.search_keyword)
+        self.selected_type_combobox = ttk.Combobox(self, width=20, textvariable=self.selected_type, state="readonly")
+        self.selected_dominant_color_combobox = ttk.Combobox(self, width=20, textvariable=self.selected_dominant_color, state="readonly")
+
+        # set combobox value
+        self.selected_type_combobox["values"] = self.selected_type_choices
+        self.selected_dominant_color_combobox["values"] = self.selected_dominant_color_choices
+
+        # set default value
+        self.selected_type_combobox.current(0)
+        self.selected_dominant_color_combobox.current(0)
+
+        # don't forget to add sticky
+        self.search_keyword_label = tk.Label(self, text="Search keyword:").grid(row=1, column=0, padx=5, pady=5)
+        self.selected_type_label = tk.Label(self, text="Types:").grid(row=2, column=0, padx=5, pady=5)
+        self.selected_dominant_color_label = tk.Label(self, text="Dominant color:").grid(row=3, column=0, padx=5, pady=5)
+        self.search_keyword_field.grid(row=1, column=1, padx=5, pady=5)
+        self.selected_type_combobox.grid(row=2, column=1, padx=5, pady=5)
+        self.selected_dominant_color_combobox.grid(row=3, column=1, padx=5, pady=5)
 
     def run(self):
         self.mainloop()
