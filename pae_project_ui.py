@@ -44,7 +44,7 @@ class PaeProject(tk.Tk):
 
         # Frame
         bottomframe = tk.Frame(self, bg="black", width=1000, height=500)
-        bottomframe.grid(row=1, column=2, padx=5, pady=5, columnspan=100, rowspan=100)
+        bottomframe.grid(row=1, column=2, padx=5, pady=5, columnspan=5, rowspan=100)
 
     def submit_handler(self):
         current_search_keyword = self.search_keyword.get()
@@ -60,6 +60,12 @@ class PaeProject(tk.Tk):
         print(current_selected_type)
         print(current_selected_dominant_color)
         # use google image search service
+        # get list of images
+
+        # display images
+
+    def display_image(self, images: list[str]):
+        print(images)
 
     def run(self):
         self.mainloop()
