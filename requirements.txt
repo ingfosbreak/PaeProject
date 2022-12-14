@@ -3,3 +3,4 @@ virtualenv
 python-dotenv
 windows-curses
 os
+Pillow

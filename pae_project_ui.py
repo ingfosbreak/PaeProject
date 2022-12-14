@@ -1,11 +1,21 @@
 import tkinter as tk
 from tkinter import ttk, RIGHT, BOTTOM, Y, X, NO, CENTER
+from PIL import Image, ImageTk
+from urllib.request import urlopen
 
+
+mock_images_url= ['https://pixnio.com/free-images/2017/10/21/2017-10-21-08-04-02.jpg',
+ 'https://c0.wallpaperflare.com/preview/397/432/51/sky-wallpaper-background-nature.jpg',
+ 'https://pixnio.com/free-images/2017/10/21/2017-10-21-08-04-02-1078x825.jpg',
+ 'https://p0.pikist.com/photos/89/865/building-house-old-colonial-doors-architecture-painted-urban-city.jpg',
+ 'https://pixnio.com/free-images/2017/09/13/2017-09-13-07-49-15.jpg']
 
 class PaeProject(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("PaeProject")
+        # self.grid_rowconfigure(0, weight=1)  # 5
+        # self.grid_columnconfigure(0, weight=1)  # 7
 
         # variables
         self.search_keyword = tk.StringVar()
@@ -43,8 +53,11 @@ class PaeProject(tk.Tk):
         self.submit_button.grid(row=4, column=0, padx=5, pady=5, columnspan=2)
 
         # Frame
-        bottomframe = tk.Frame(self, bg="black", width=1000, height=500)
-        bottomframe.grid(row=1, column=2, padx=5, pady=5, columnspan=5, rowspan=100)
+        # self.images_frame = tk.Frame(self, bg="black", width=1000, height=500)
+        # self.images_frame.grid(row=1, column=2, padx=5, pady=5, columnspan=5, rowspan=100)
+
+        # Display text
+        # self.frame_status_label = tk.Label(self.images_frame, text="Nothing to do", fg="white", bg="black").pack(anchor=CENTER)
 
     def submit_handler(self):
         current_search_keyword = self.search_keyword.get()
@@ -63,9 +76,19 @@ class PaeProject(tk.Tk):
         # get list of images
 
         # display images
+        self.display_images([mock_images_url[0]])
 
-    def display_image(self, images: list[str]):
-        print(images)
+    def display_images(self, images: list[str]):
+        temp_row = 5
+        for image_url in images:
+           u = urlopen(image_url) 
+           raw_data = u.read()
+           u.close()
+
+           photo = ImageTk.PhotoImage(data=raw_data)
+           label = tk.Label(image=photo)
+           label.image = photo
+           label.grid(row=temp_row, column=0, padx=5, pady=5, columnspan=2)
 
     def run(self):
         self.mainloop()
