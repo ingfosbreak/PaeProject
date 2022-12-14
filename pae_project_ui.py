@@ -39,6 +39,17 @@ class PaeProject(tk.Tk):
         self.selected_type_combobox.grid(row=2, column=1, padx=5, pady=5)
         self.selected_dominant_color_combobox.grid(row=3, column=1, padx=5, pady=5)
 
+        self.submit_button = tk.Button(self, text='Submit',
+                                      command=lambda x=None: self.submit_handler())
+        self.submit_button.grid(row=4, column=0, padx=5, pady=5, columnspan=2)
+
+    def submit_handler(self):
+        print("Clicked")
+        print()
+        print(self.search_keyword.get())
+        print(self.selected_type.get())
+        print(self.selected_dominant_color.get())
+
     def run(self):
         self.mainloop()
 
