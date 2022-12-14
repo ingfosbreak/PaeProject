@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk, RIGHT, BOTTOM, Y, X, NO, CENTER
 from PIL import Image, ImageTk
 from urllib.request import urlopen
+from io import BytesIO
 
 
 mock_images_url= ['https://pixnio.com/free-images/2017/10/21/2017-10-21-08-04-02.jpg',
@@ -77,21 +78,27 @@ class PaeProject(tk.Tk):
         # get list of images
 
         # display images
-        self.display_images([mock_images_url[0]])
+        self.display_images(mock_images_url)
 
     def display_images(self, images: list[str]):
         temp_row = 5
         for image_url in images:
-           u = urlopen(image_url) 
-           raw_data = u.read()
-           u.close()
+            try:
+                u = urlopen(image_url) 
+                raw_data = u.read()
+                u.close()
 
-           photo = ImageTk.PhotoImage(data=raw_data)
-           label = tk.Label(image=photo)
-           label.image = photo
-           label.grid(row=temp_row, column=0, padx=5, pady=5, columnspan=100)
+                # open the image and resize
+                im = Image.open(BytesIO(raw_data)).resize((300, 100))
 
-           temp_row += 1
+                photo = ImageTk.PhotoImage(im)
+                label = tk.Label(image=photo)
+                label.image = photo
+                label.grid(row=temp_row, column=0, padx=5, pady=5, columnspan=100)
+
+                temp_row += 1
+            except:
+                pass
 
     def run(self):
         self.mainloop()
