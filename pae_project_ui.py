@@ -69,9 +69,10 @@ class PaeProject(tk.Tk):
         if current_selected_dominant_color == "None":
             current_selected_dominant_color = "imgDominantColorUndefined"
 
-        print(current_search_keyword)
-        print(current_selected_type)
-        print(current_selected_dominant_color)
+        # print(current_search_keyword)
+        # print(current_selected_type)
+        # print(current_selected_dominant_color)
+
         # use google image search service
         # get list of images
 
@@ -88,7 +89,9 @@ class PaeProject(tk.Tk):
            photo = ImageTk.PhotoImage(data=raw_data)
            label = tk.Label(image=photo)
            label.image = photo
-           label.grid(row=temp_row, column=0, padx=5, pady=5, columnspan=2)
+           label.grid(row=temp_row, column=0, padx=5, pady=5, columnspan=100)
+
+           temp_row += 1
 
     def run(self):
         self.mainloop()
