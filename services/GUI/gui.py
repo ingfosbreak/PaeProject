@@ -37,13 +37,13 @@ rightFrame = Frame(main, bg="#007ea7",width=800,height=550)
 rightFrame.pack(side= RIGHT)
 
 canvas = Canvas(leftFrame, bg="#FFFFFF", width=350,height=550,highlightthickness=0)
-canvas.pack(padx=10,pady=25)
+canvas.place(x=20,y=25)
 round_rectangle(canvas,0, 0, 350, 500, radius=70)
 # canvas = Canvas(leftFrame, bg="grey", highlightthickness=0)
 # canvas.pack(fill=BOTH, expand=1)
 
 
-Label(canvas, text="Position 1 : x=0, y=0", bg="white", fg="black", font=('Times',24)).place(x=50, y=200)
+Label(canvas, text="Position 1 : x=0, y=0", bg="#DEE5E5", fg="black", font=('Times',24)).place(x=50, y=200)
 
 
 
@@ -59,6 +59,7 @@ Label(canvas, text="Position 1 : x=0, y=0", bg="white", fg="black", font=('Times
 # firstName.grid(row=0, column=1)
 # lastName.grid(row=1, column=1)
 
+main.resizable(False, False) 
 main.mainloop()
 
 
