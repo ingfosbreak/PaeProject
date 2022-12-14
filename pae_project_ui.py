@@ -14,7 +14,6 @@ class PaeProject(tk.Tk):
 
         self.selected_type_choices = ["None", "room", "building"]
         self.selected_dominant_color_choices = ["None", "black","blue", "brown", "gray", "green", "orange", "pink", "purple", "red", "teal", "white", "yellow"]
-        # Notes: type None = "", dominant None = "imgDominantColorUndefined"
 
         self.init_components()
 
@@ -44,11 +43,19 @@ class PaeProject(tk.Tk):
         self.submit_button.grid(row=4, column=0, padx=5, pady=5, columnspan=2)
 
     def submit_handler(self):
-        print("Clicked")
-        print()
-        print(self.search_keyword.get())
-        print(self.selected_type.get())
-        print(self.selected_dominant_color.get())
+        current_search_keyword = self.search_keyword.get()
+        current_selected_type = self.selected_type.get()
+        current_selected_dominant_color = self.selected_dominant_color.get()
+
+        if current_selected_type == "None":
+            current_selected_type = ""
+        if current_selected_dominant_color == "None":
+            current_selected_dominant_color = "imgDominantColorUndefined"
+
+        print(current_search_keyword)
+        print(current_selected_type)
+        print(current_selected_dominant_color)
+        # use google image search service
 
     def run(self):
         self.mainloop()
