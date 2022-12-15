@@ -11,9 +11,8 @@ else:
 DEVELOPER_KEY = os.environ.get("GCS_DEVELOPER_KEY")
 CX = os.environ.get("GCS_CX")
 
-
 def fetch_images(searchfor, dominantColor):
-  # print(f"fetch_images('{searchfor}', '{dominantColor}')")
+  print(f'images_search: fetch_images("{searchfor}", "{dominantColor}")')
 
   with GoogleImagesSearch(DEVELOPER_KEY, CX) as gis:
     _search_params = {
@@ -27,10 +26,9 @@ def fetch_images(searchfor, dominantColor):
       }
     try:
       gis.search(search_params=_search_params)
-      results = gis.results()
-      return [image.url for image in results]
+      images = gis.results()
+      return [image.url for image in images]
     except HttpError as err:
       return err.resp.status
 
-
-print(fetch_images('urban house', 'white'))
+# print(fetch_images('urban houes', 'white'))

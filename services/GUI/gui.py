@@ -190,8 +190,9 @@ class PaeGUI:
 
         # use google image search service
         # get list of images
+        print(f'ui: fetch_images("{current_search_keyword} {current_selected_type}", "{current_selected_dominant_color}")')
         images_url = fetch_images(f"{current_search_keyword} {current_selected_type}", current_selected_dominant_color)
-        print(images_url)
+        print(images_url)       
         if type(images_url) is list:
             # display images
             # self.display_images(mock_images_url)
@@ -199,7 +200,6 @@ class PaeGUI:
             self.display_images(images_url)
         else:
             # error handle
-
             self.var1.set("ImageSearch:~ $python")
             self.var2.set("Python 3.9.10 (default, released 13)")
             self.var3.set("Type “help”, “copyright”, “credits” or “license” for more information")
