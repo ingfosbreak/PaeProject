@@ -20,6 +20,7 @@ class PaeGUI:
         self.root.title("PaeProgram")
         self.root.geometry("1000x550")
         self.root.resizable(False, False) 
+        self.images = []
 
         # variables
         self.search_keyword = StringVar()
@@ -171,6 +172,8 @@ class PaeGUI:
         return root.create_polygon(points, **kwargs, smooth=True, fill="#DEE5E5")
 
     def submit_handler(self):
+        for widget in self.images:
+            widget.destroy() 
         
         current_search_keyword = self.search_keyword.get()
         current_selected_type = self.selected_type.get()
@@ -226,6 +229,7 @@ class PaeGUI:
 
                 photo = ImageTk.PhotoImage(im)
                 label = Label(self.rightFrame,image=photo)
+                self.images.append(label)
                 label.image = photo
                 label.place(x= posx, y= posy)
                 posy += 150
