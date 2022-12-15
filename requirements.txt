@@ -3,3 +3,6 @@ virtualenv
 python-dotenv
 windows-curses
 os
+Pillow
+io
+google-api-python-client

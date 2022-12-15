@@ -1,5 +1,6 @@
 from google_images_search import GoogleImagesSearch
-from dotenv import load_dotenv, dotenv_values
+from googleapiclient.errors import HttpError
+from dotenv import load_dotenv
 import os
 
 if os.path.exists(".env"):
@@ -10,12 +11,9 @@ else:
 DEVELOPER_KEY = os.environ.get("GCS_DEVELOPER_KEY")
 CX = os.environ.get("GCS_CX")
 
-# print(DEVELOPER_KEY, CX)
-
-# gis = GoogleImagesSearch(DEVELOPER_KEY, CX)
-
-
 def fetch_images(searchfor, dominantColor):
+  print(f'images_search: fetch_images("{searchfor}", "{dominantColor}")')
+
   with GoogleImagesSearch(DEVELOPER_KEY, CX) as gis:
     _search_params = {
       "q": searchfor, 
@@ -26,12 +24,11 @@ def fetch_images(searchfor, dominantColor):
       "rights": "cc_publicdomain",
       "imgDominantColor": dominantColor 
       }
-    gis.search(search_params=_search_params)
-    return gis.results()
+    try:
+      gis.search(search_params=_search_params)
+      images = gis.results()
+      return [image.url for image in images]
+    except HttpError as err:
+      return err.resp.status
 
-
-print([image.url for image in fetch_images('urban houes', 'white')])
-
-# image0 = fetch_images("monkey")[0]
-# print(image0.url)
-# print(image0.referrer_url)
+# print(fetch_images('urban houes', 'white'))
