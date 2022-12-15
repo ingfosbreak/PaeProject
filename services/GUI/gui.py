@@ -72,7 +72,7 @@ class PaeGUI:
 
         self.submit_button = Button(self.canvas, text='Submit',  bg='#DEE5E5',
                                       command=lambda x=None: self.submit_handler())
-        self.submit_button.grid(row=4, column=0, padx=5, pady=25, columnspan=2)
+        self.submit_button.grid(row=4, column=0, padx=5, pady=30, columnspan=2)
 
 
 
