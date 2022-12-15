@@ -4,6 +4,13 @@ from PIL import Image, ImageTk
 from urllib.request import urlopen
 from io import BytesIO
 
+
+mock_images_url= ['https://pixnio.com/free-images/2017/10/21/2017-10-21-08-04-02.jpg',
+ 'https://c0.wallpaperflare.com/preview/397/432/51/sky-wallpaper-background-nature.jpg',
+ 'https://pixnio.com/free-images/2017/10/21/2017-10-21-08-04-02-1078x825.jpg',
+ 'https://p0.pikist.com/photos/89/865/building-house-old-colonial-doors-architecture-painted-urban-city.jpg',
+ 'https://pixnio.com/free-images/2017/09/13/2017-09-13-07-49-15.jpg']
+
 class PaeGUI: 
     def __init__(self,root):
         self.root = root
@@ -71,8 +78,8 @@ class PaeGUI:
         self.selected_dominant_color_combobox.grid(row=3, column=1, padx=30, pady=5)
 
         # fix window GUI
-        self.fix1 = Label(self.canvas, text="",  bg='#DEE5E5').grid(row=1, column=4, padx=20, pady=20)
-        self.fix2 = Label(self.canvas, text="",  bg='#DEE5E5').grid(row=5, column=4, padx=20, pady=30)
+        # self.fix1 = Label(self.canvas, text="",  bg='#DEE5E5').grid(row=1, column=4, padx=20, pady=20)
+        # self.fix2 = Label(self.canvas, text="",  bg='#DEE5E5').grid(row=5, column=4, padx=20, pady=30)
         
         
 
@@ -128,7 +135,48 @@ class PaeGUI:
         return root.create_polygon(points, **kwargs, smooth=True, fill="#DEE5E5")
 
     def submit_handler(self):
-        pass
+        current_search_keyword = self.search_keyword.get()
+        current_selected_type = self.selected_type.get()
+        current_selected_dominant_color = self.selected_dominant_color.get()
+
+        if current_selected_type == "None":
+            current_selected_type = ""
+        if current_selected_dominant_color == "None":
+            current_selected_dominant_color = "imgDominantColorUndefined"
+
+        # print(current_search_keyword)
+        # print(current_selected_type)
+        # print(current_selected_dominant_color)
+
+        # use google image search service
+        # get list of images
+
+        # display images
+        self.display_images(mock_images_url)
+
+    def display_images(self, images: list[str]):
+        # temp_row = 5
+        posy = 50
+        for image_url in images:
+            
+            try:
+                u = urlopen(image_url) 
+                raw_data = u.read()
+                u.close()
+
+                # open the image and resize
+                im = Image.open(BytesIO(raw_data)).resize((300, 90))
+
+                photo = ImageTk.PhotoImage(im)
+                label = Label(self.rightFrame,image=photo)
+                label.image = photo
+                label.place(x=50, y= posy)
+                posy += 90
+                # grid(row=temp_row, column=0, padx=5, pady=5, columnspan=100)
+
+                # temp_row += 1
+            except:
+                pass
 
     def make_Draggable(self, root):
         root.bind('<Button-1>', self.saveLastClickPos)
