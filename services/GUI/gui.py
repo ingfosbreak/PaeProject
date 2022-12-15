@@ -1,20 +1,25 @@
 from tkinter import *
+from tkinter import ttk, RIGHT, BOTTOM, Y, X, NO, CENTER
 from PIL import Image, ImageTk
 from urllib.request import urlopen
 from io import BytesIO
 
-class PaeGUI:
+class PaeGUI: 
     def __init__(self,root):
         self.root = root
         self.root.title("PaeProgram")
         self.root.geometry("1000x550")
-        self.root.resizable(False, False)
+        self.root.resizable(False, False) 
 
         # variables
         self.search_keyword = StringVar()
         self.selected_type = StringVar()
         self.selected_dominant_color = StringVar()
         
+
+        self.selected_type_choices = ["None", "room", "building"]
+        self.selected_dominant_color_choices = ["None", "black","blue", "brown", "gray", "green", "orange", "pink", "purple", "red", "teal", "white", "yellow"]
+
         '''
             for draggable and beauty
         '''
@@ -40,9 +45,35 @@ class PaeGUI:
         '''
             Left Frame
         '''
-        self.canvas = Canvas(self.leftFrame, bg="#FFFFFF", width=350,height=550,highlightthickness=0)
-        self.canvas.place(x=20,y=25)
-        self.round_rectangle(self.canvas,0, 0, 350, 500, radius=70)
+        self.canvas = Canvas(self.leftFrame, bg="#FFFFFF", width=400,height=550,highlightthickness=0)
+        self.canvas.place(x=25,y=250)
+        self.round_rectangle(self.canvas,0, 0, 350, 275, radius=70)
+
+        self.search_keyword_field = Entry(self.canvas, width=20, textvariable=self.search_keyword)
+        self.selected_type_combobox = ttk.Combobox(self.canvas, width=20, textvariable=self.selected_type, state="readonly")
+        self.selected_dominant_color_combobox = ttk.Combobox(self.canvas, width=20, textvariable=self.selected_dominant_color, state="readonly")
+
+        # set combobox value
+        self.selected_type_combobox["values"] = self.selected_type_choices
+        self.selected_dominant_color_combobox["values"] = self.selected_dominant_color_choices
+
+         # set default value
+        self.selected_type_combobox.current(0)
+        self.selected_dominant_color_combobox.current(0)
+
+
+        # don't forget to add sticky
+        self.search_keyword_label = Label(self.canvas, text="Search keyword:", bg='#DEE5E5').grid(row=1, column=0, padx=10, pady=20)
+        self.selected_type_label = Label(self.canvas, text="Types:",  bg='#DEE5E5').grid(row=2, column=0, padx=10, pady=20)
+        self.selected_dominant_color_label = Label(self.canvas, text="Dominant color:",  bg='#DEE5E5').grid(row=3, column=0, padx=10, pady=20)
+        self.search_keyword_field.grid(row=1, column=1, padx=20, pady=20,)
+        self.selected_type_combobox.grid(row=2, column=1, padx=5, pady=5)
+        self.selected_dominant_color_combobox.grid(row=3, column=1, padx=5, pady=5)
+
+        self.submit_button = Button(self.canvas, text='Submit',  bg='#DEE5E5',
+                                      command=lambda x=None: self.submit_handler())
+        self.submit_button.grid(row=4, column=0, padx=5, pady=25, columnspan=2)
+
 
 
         '''
@@ -89,6 +120,9 @@ class PaeGUI:
                 x1, y1]
 
         return root.create_polygon(points, **kwargs, smooth=True, fill="#DEE5E5")
+
+    def submit_handler(self):
+        pass
 
     def make_Draggable(self, root):
         root.bind('<Button-1>', self.saveLastClickPos)
