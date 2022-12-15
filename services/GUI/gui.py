@@ -66,9 +66,15 @@ class PaeGUI:
         self.search_keyword_label = Label(self.canvas, text="Search keyword:", bg='#DEE5E5').grid(row=1, column=0, padx=10, pady=20)
         self.selected_type_label = Label(self.canvas, text="Types:",  bg='#DEE5E5').grid(row=2, column=0, padx=10, pady=20)
         self.selected_dominant_color_label = Label(self.canvas, text="Dominant color:",  bg='#DEE5E5').grid(row=3, column=0, padx=10, pady=20)
-        self.search_keyword_field.grid(row=1, column=1, padx=20, pady=20,)
-        self.selected_type_combobox.grid(row=2, column=1, padx=5, pady=5)
-        self.selected_dominant_color_combobox.grid(row=3, column=1, padx=5, pady=5)
+        self.search_keyword_field.grid(row=1, column=1, padx=30, pady=20)
+        self.selected_type_combobox.grid(row=2, column=1, padx=30, pady=5)
+        self.selected_dominant_color_combobox.grid(row=3, column=1, padx=30, pady=5)
+
+        # fix window GUI
+        self.fix1 = Label(self.canvas, text="",  bg='#DEE5E5').grid(row=1, column=4, padx=20, pady=20)
+        self.fix2 = Label(self.canvas, text="",  bg='#DEE5E5').grid(row=5, column=4, padx=20, pady=30)
+        
+        
 
         self.submit_button = Button(self.canvas, text='Submit',  bg='#DEE5E5',
                                       command=lambda x=None: self.submit_handler())
