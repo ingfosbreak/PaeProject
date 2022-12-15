@@ -88,6 +88,18 @@ class PaeGUI:
                                       command=lambda x=None: self.submit_handler())
         self.submit_button.grid(row=4, column=0, padx=5, pady=30, columnspan=2)
 
+        # logo
+        logo_image = Image.open("resources/Logo.jpg")
+        logo_image_TK = ImageTk.PhotoImage(logo_image)
+
+        logo_Label = Label(self.leftFrame, image=logo_image_TK,highlightthickness=0,bg="white")
+        logo_Label.image = logo_image_TK
+        
+        logo_Label.place(x=35, y=30)
+
+
+
+
 
 
         '''
