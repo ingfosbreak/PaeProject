@@ -211,8 +211,9 @@ class PaeGUI:
             self.terminal4.config(fg="red")
 
     def display_images(self, images: list[str]):
-        # temp_row = 5
+        temp_row = 1
         posy = 50
+        posx = 50
         for image_url in images:
             
             try:
@@ -221,16 +222,18 @@ class PaeGUI:
                 u.close()
 
                 # open the image and resize
-                im = Image.open(BytesIO(raw_data)).resize((300, 90))
+                im = Image.open(BytesIO(raw_data)).resize((250, 150))
 
                 photo = ImageTk.PhotoImage(im)
                 label = Label(self.rightFrame,image=photo)
                 label.image = photo
-                label.place(x=50, y= posy)
-                posy += 90
+                label.place(x= posx, y= posy)
+                posy += 150
                 # grid(row=temp_row, column=0, padx=5, pady=5, columnspan=100)
-
-                # temp_row += 1
+                if (temp_row == 3):
+                    posx = 310
+                    posy = 50
+                temp_row += 1
             except:
                 pass
 
