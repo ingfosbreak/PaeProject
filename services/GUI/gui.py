@@ -3,6 +3,7 @@ from tkinter import ttk, RIGHT, BOTTOM, Y, X, NO, CENTER
 from PIL import Image, ImageTk
 from urllib.request import urlopen
 from io import BytesIO
+from services.google_search.images_search import fetch_images
 import time
 
 
@@ -10,7 +11,8 @@ mock_images_url= ['https://pixnio.com/free-images/2017/10/21/2017-10-21-08-04-02
  'https://c0.wallpaperflare.com/preview/397/432/51/sky-wallpaper-background-nature.jpg',
  'https://pixnio.com/free-images/2017/10/21/2017-10-21-08-04-02-1078x825.jpg',
  'https://p0.pikist.com/photos/89/865/building-house-old-colonial-doors-architecture-painted-urban-city.jpg',
- 'https://pixnio.com/free-images/2017/09/13/2017-09-13-07-49-15.jpg']
+ 'https://pixnio.com/free-images/2017/09/13/2017-09-13-07-49-15.jpg'
+ ]
 
 class PaeGUI: 
     def __init__(self,root):
@@ -116,11 +118,15 @@ class PaeGUI:
         self.var3.set("Type “help”, “copyright”, “credits” or “license” for more information")
         self.var4.set(">>> Wating for Image Search")
 
-        self.terminal1 = Label(self.rightFrame, textvariable=self.var1, fg='#29BF12', bg="black").place(x=50,y=50)
-        self.terminal2 = Label(self.rightFrame, textvariable=self.var2, fg='#29BF12', bg="black").place(x=50,y=70)
-        self.terminal3 = Label(self.rightFrame, textvariable=self.var3, fg='#29BF12', bg="black").place(x=50,y=90)
-        self.terminal4 = Label(self.rightFrame, textvariable=self.var4, fg='#29BF12', bg="black").place(x=50,y=110)
-        
+        self.terminal1 = Label(self.rightFrame, textvariable=self.var1, fg='#29BF12', bg="black")
+        self.terminal2 = Label(self.rightFrame, textvariable=self.var2, fg='#29BF12', bg="black")
+        self.terminal3 = Label(self.rightFrame, textvariable=self.var3, fg='#29BF12', bg="black")
+        self.terminal4 = Label(self.rightFrame, textvariable=self.var4, fg='#29BF12', bg="black")
+
+        self.terminal1.place(x=50,y=50)
+        self.terminal2.place(x=50,y=70)
+        self.terminal3.place(x=50,y=90)
+        self.terminal4.place(x=50,y=110)
 
 
         '''
@@ -182,15 +188,27 @@ class PaeGUI:
         if current_selected_dominant_color == "None":
             current_selected_dominant_color = "imgDominantColorUndefined"
 
-        # print(current_search_keyword)
-        # print(current_selected_type)
-        # print(current_selected_dominant_color)
-
         # use google image search service
         # get list of images
+        images_url = fetch_images(f"{current_search_keyword} {current_selected_type}", current_selected_dominant_color)
+        print(images_url)
+        if type(images_url) is list:
+            # display images
+            # self.display_images(mock_images_url)
 
-        # display images
-        self.display_images(mock_images_url)
+            self.display_images(images_url)
+        else:
+            # error handle
+
+            self.var1.set("ImageSearch:~ $python")
+            self.var2.set("Python 3.9.10 (default, released 13)")
+            self.var3.set("Type “help”, “copyright”, “credits” or “license” for more information")
+            self.var4.set(f">>> Error {images_url}")
+
+            self.terminal1.config(fg="red")
+            self.terminal2.config(fg="red")
+            self.terminal3.config(fg="red")
+            self.terminal4.config(fg="red")
 
     def display_images(self, images: list[str]):
         # temp_row = 5
