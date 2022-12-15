@@ -1,6 +1,71 @@
 from tkinter import *
+from PIL import Image, ImageTk
+from urllib.request import urlopen
+from io import BytesIO
 
-def round_rectangle(root, x1, y1, x2, y2, radius=25, **kwargs): # Creating a rounded rectangle
+class PaeGUI:
+    def __init__(self,root):
+        self.root = root
+        self.root.title("PaeProgram")
+        self.root.geometry("1000x550")
+        self.root.resizable(False, False)
+
+        # variables
+        self.search_keyword = StringVar()
+        self.selected_type = StringVar()
+        self.selected_dominant_color = StringVar()
+        
+        '''
+            for draggable and beauty
+        '''
+        self.root.overrideredirect(True) 
+        self.lastClickX = 0
+        self.lastClickY = 0
+        self.make_Draggable(self.root)
+    
+
+        self.init_Components()
+
+
+
+    def init_Components(self):
+        ''' 
+            Main Frame
+        '''
+        self.leftFrame = Frame(self.root, bg="#FFFFFF",width=400,height=550)
+        self.leftFrame.pack(side=LEFT)
+        self.rightFrame = Frame(self.root, bg="black",width=800,height=550, highlightthickness=1)
+        self.rightFrame.pack(side= RIGHT)
+
+        '''
+            Left Frame
+        '''
+        self.canvas = Canvas(self.leftFrame, bg="#FFFFFF", width=350,height=550,highlightthickness=0)
+        self.canvas.place(x=20,y=25)
+        self.round_rectangle(self.canvas,0, 0, 350, 500, radius=70)
+
+
+        '''
+            Right Frame
+        '''
+
+        '''
+            Close Button
+        '''
+
+        close_image = Image.open("resources/close-button-label.png")
+        close_image_TK = ImageTk.PhotoImage(close_image)
+
+        close_Label = Label(self.root, image=close_image_TK, bg='white')
+        close_Label.image = close_image_TK
+        close_Label.bind('<Button-1>', self.exit_button_Click)
+
+        
+        close_Label.place(x=965, y=15)
+
+
+
+    def round_rectangle(self, root, x1, y1, x2, y2, radius=25, **kwargs): # Creating a rounded rectangle
         
         points = [x1+radius, y1,
                 x1+radius, y1,
@@ -25,45 +90,19 @@ def round_rectangle(root, x1, y1, x2, y2, radius=25, **kwargs): # Creating a rou
 
         return root.create_polygon(points, **kwargs, smooth=True, fill="#DEE5E5")
 
+    def make_Draggable(self, root):
+        root.bind('<Button-1>', self.saveLastClickPos)
+        root.bind('<B1-Motion>', self.dragging)
+    
+    def saveLastClickPos(self, event):
+        global lastClickX, lastClickY
+        lastClickX = event.x
+        lastClickY = event.y
 
-main = Tk()
-main.title("PaeProgram")
-main.geometry("1000x550")
-
-
-leftFrame = Frame(main, bg="#FFFFFF",width=400,height=550)
-leftFrame.pack(side=LEFT)
-rightFrame = Frame(main, bg="#007ea7",width=800,height=550)
-rightFrame.pack(side= RIGHT)
-
-canvas = Canvas(leftFrame, bg="#FFFFFF", width=350,height=550,highlightthickness=0)
-canvas.place(x=20,y=25)
-round_rectangle(canvas,0, 0, 350, 500, radius=70)
-# canvas = Canvas(leftFrame, bg="grey", highlightthickness=0)
-# canvas.pack(fill=BOTH, expand=1)
+    def dragging(self,event):
+        x, y = event.x - lastClickX + self.root.winfo_x(), event.y - lastClickY + self.root.winfo_y()
+        self.root.geometry("+%s+%s" % (x , y))
 
 
-Label(canvas, text="Position 1 : x=0, y=0", bg="#DEE5E5", fg="black", font=('Times',24)).place(x=50, y=200)
-
-
-
-
-
-
-
-
-
-# firstName = Entry(main)
-# lastName = Entry(main)
-
-# firstName.grid(row=0, column=1)
-# lastName.grid(row=1, column=1)
-
-main.resizable(False, False) 
-main.mainloop()
-
-
-
-
-
-
+    def exit_button_Click(self,event):
+        self.root.destroy()

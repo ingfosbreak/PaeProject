@@ -1,9 +1,10 @@
 from tkinter import *
+from services.GUI.gui import PaeGUI
 
 # main function
 def main():
     root = Tk()
-    # app = window( **root master )
+    app = PaeGUI(root)
     root.mainloop()
 
 
