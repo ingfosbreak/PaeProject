@@ -130,3 +130,5 @@ dmypy.json
 
 # JetBrain
 .idea/
+
+__pycache__/
