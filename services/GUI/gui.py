@@ -3,6 +3,7 @@ from tkinter import ttk, RIGHT, BOTTOM, Y, X, NO, CENTER
 from PIL import Image, ImageTk
 from urllib.request import urlopen
 from io import BytesIO
+import time
 
 
 mock_images_url= ['https://pixnio.com/free-images/2017/10/21/2017-10-21-08-04-02.jpg',
@@ -78,8 +79,8 @@ class PaeGUI:
         self.selected_dominant_color_combobox.grid(row=3, column=1, padx=30, pady=5)
 
         # fix window GUI
-        # self.fix1 = Label(self.canvas, text="",  bg='#DEE5E5').grid(row=1, column=4, padx=20, pady=20)
-        # self.fix2 = Label(self.canvas, text="",  bg='#DEE5E5').grid(row=5, column=4, padx=20, pady=30)
+        self.fix1 = Label(self.canvas, text="",  bg='#DEE5E5').grid(row=1, column=4, padx=20, pady=20)
+        self.fix2 = Label(self.canvas, text="",  bg='#DEE5E5').grid(row=5, column=4, padx=20, pady=30)
         
         
 
@@ -92,6 +93,23 @@ class PaeGUI:
         '''
             Right Frame
         '''
+
+        self.var1 = StringVar()
+        self.var2 = StringVar()
+        self.var3 = StringVar()
+        self.var4 = StringVar()
+
+        self.var1.set("ImageSearch:~ $python")
+        self.var2.set("Python 3.9.10 (default, released 13)")
+        self.var3.set("Type “help”, “copyright”, “credits” or “license” for more information")
+        self.var4.set(">>> Wating for Image Search")
+
+        self.terminal1 = Label(self.rightFrame, textvariable=self.var1, fg='#29BF12', bg="black").place(x=50,y=50)
+        self.terminal2 = Label(self.rightFrame, textvariable=self.var2, fg='#29BF12', bg="black").place(x=50,y=70)
+        self.terminal3 = Label(self.rightFrame, textvariable=self.var3, fg='#29BF12', bg="black").place(x=50,y=90)
+        self.terminal4 = Label(self.rightFrame, textvariable=self.var4, fg='#29BF12', bg="black").place(x=50,y=110)
+        
+
 
         '''
             Close Button
@@ -135,9 +153,17 @@ class PaeGUI:
         return root.create_polygon(points, **kwargs, smooth=True, fill="#DEE5E5")
 
     def submit_handler(self):
+        
         current_search_keyword = self.search_keyword.get()
         current_selected_type = self.selected_type.get()
         current_selected_dominant_color = self.selected_dominant_color.get()
+
+        self.var1.set("")
+        self.var2.set("")
+        self.var3.set("")
+        self.var4.set("")
+
+
 
         if current_selected_type == "None":
             current_selected_type = ""
@@ -190,6 +216,7 @@ class PaeGUI:
     def dragging(self,event):
         x, y = event.x - lastClickX + self.root.winfo_x(), event.y - lastClickY + self.root.winfo_y()
         self.root.geometry("+%s+%s" % (x , y))
+    
 
 
     def exit_button_Click(self,event):
